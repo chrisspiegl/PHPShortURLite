@@ -52,6 +52,12 @@ I got some inspiring orientation form the following open source projects on GitH
 * Admin interface
 * Shorten interface
 
+## 2012-08-09: v0.1.2
+
+* Some minor bugfixes
+* Cleanup
+* First LIVE installation possible incl Secondcrack Facebook hook
+
 ## 2012-08-08: v0.1.1
 
 * Added custom shortlink algorithm
