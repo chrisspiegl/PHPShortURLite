@@ -22,10 +22,14 @@ If you would like to shorten your URL in in another script:
 
 ## PHP
 
-	$api_user = '';
-	$api_key = '';
-	
-	$shortenedurl = file_get_contents('http://yourdomain.com/shorten/' . urlencode('http://' . $_SERVER['HTTP_HOST']  . '/' . $_SERVER['REQUEST_URI'])?API_USER=$api_user&API_KEY=$api_key);
+	<?php
+	$serverAPIurl = 'shortener.imac:8888';
+	$api_user = 'cspiegl';
+	$api_key = '27459b72456f8fd37e7080bb7fcbe6884c54697f';
+	$url_to_be_shortened = 'http://cspiegl.com/2012/08/08/force-ssl';
+
+	$shorturl = file_get_contents('http://' . $serverAPIurl . '/?o=' . urlencode($url_to_be_shortened) . '&API_USER=' . $api_user . '&API_KEY=' . $api_key);
+	echo $shorturl;
 
 # Bookmark
 

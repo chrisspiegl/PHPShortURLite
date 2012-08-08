@@ -42,7 +42,7 @@ class Shortener{
 	public function shorten($original, $tag = ''){
 		if( ! CUSTOMTAG && ! empty($tag)) die('Custom tags are deactivated');
 		if(preg_match('/^[0-9]|[^a-zA-Z0-9]/', $tag)) die( '<strong>' . $tag . '</strong>: is a tag that does not match the cretieria (tags must NOT have a numerical as first character and must NOT contain any special characters)!');
-		if( ! preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|', $original)) die('URL is invalid');	// |^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i
+		if( ! preg_match('|^http(s)?://[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(:[0-9]+)?(/.*)?$|', $original)) die('URL is invalid');	// |^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i
 		if( ! $this->checkURL($original)) return;
 		$this->dbconnect();
 		$savedate = time();
