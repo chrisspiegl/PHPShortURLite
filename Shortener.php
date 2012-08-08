@@ -21,7 +21,7 @@ class Shortener{
 		if(empty($original)) {
 			m('Loaded from DB');
 			$this->dbconnect();
-			$res = $this->db->prepare("SELECT id, original FROM $this->table_linkbase WHERE short = '$short' LIMIT 1");
+			$res = $this->db->prepare("SELECT id, original FROM $this->table_linkbase WHERE short = '$short' LIMIT 1;");
 			$res->execute();
 			if(($row = $res->fetch(PDO::FETCH_OBJ)) != null){
 				$original = $row->original;
@@ -39,42 +39,70 @@ class Shortener{
 		return $original;
 	}
 
-	public function shorten($original){
-		if(substr($original, 0, 7) != 'http://' && substr($original, 0, 8) != 'https://') $original = 'http://' . $original;
+	public function shorten($original, $tag = ''){
+		if( ! CUSTOMTAG && ! empty($tag)) die('Custom tags are deactivated');
+		if(preg_match('/^[0-9]|[^a-zA-Z0-9]/', $tag)) die( '<strong>' . $tag . '</strong>: is a tag that does not match the cretieria (tags must NOT have a numerical as first character and must NOT contain any special characters)!');
+		if( ! preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|', $original)) die('URL is invalid');	// |^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i
 		if( ! $this->checkURL($original)) return;
 		$this->dbconnect();
 		$savedate = time();
-		$res = $this->db->prepare("SELECT short FROM $this->table_linkbase WHERE original = '$original' LIMIT 1");
+		$res = $this->db->prepare("SELECT short FROM $this->table_linkbase WHERE original = '$original'" . ((CUSTOMTAG && ! empty($tag)) ? " OR short = '$tag'" : "") . " LIMIT 1;");
 		$res->execute();
+
 		if(($row = $res->fetch(PDO::FETCH_OBJ)) != null){
+			if(CUSTOMTAG && ! empty($tag) && $row->short === $tag) die('The tag (<strong>' . $tag . '</strong>) is already in use.');
 			return $row->short;
 		}else{
-			// Insert into table
-			$this->db->prepare("INSERT INTO $this->table_linkbase ('original', 'savedate') VALUES ('$original', '$savedate')")->execute();
-			// Get id to generate SHORT
-			$id = $this->db->query("SELECT id FROM $this->table_linkbase ORDER BY id DESC LIMIT 1;")->fetch(PDO::FETCH_OBJ)->id;
-			// Generate SHORT
-			$short = $this->getShortenedURLFromID($id);
-			// Update database (save SHORT)
-			$this->db->query("UPDATE $this->table_linkbase SET short = '$short' WHERE id = '$id'");
+			if( ! empty($tag)){
+				$short = $tag;
+				// Insert into table
+				$this->db->prepare("INSERT INTO $this->table_linkbase ('original', 'short', 'savedate') VALUES ('$original', '$short', '$savedate');")->execute();
+			}else{
+				// Insert into table
+				$this->db->prepare("INSERT INTO $this->table_linkbase ('original', 'savedate') VALUES ('$original', '$savedate');")->execute();
+				// Get id to generate SHORT
+				$id = $this->db->query("SELECT id FROM $this->table_linkbase ORDER BY id DESC LIMIT 1;")->fetch(PDO::FETCH_OBJ)->id;
+				// Generate SHORT
+				$short = $this->getShortenedURLFromID($id);
+				// Update database (save SHORT)
+				$this->db->query("UPDATE $this->table_linkbase SET short = '$short' WHERE id = '$id';");
+			}
 			return $short;
 		}
 	}
 
-	// Calculates the SHORT url based on the ID
-	private function getShortenedURLFromID($integer, $base = ALLOWED_CHARS){
+	// Calculate SHORT based on ID (deciding if CUSTOMTAG or not)
+	private function getShortenedURLFromID($integer){
+		return (CUSTOMTAG) ? $this->getShortenedURLFromIDCustom($integer) : $this->getShortenedURLFromIDnonCustom($integer);
+	}
+
+	// Calculates the SHORT url based on the ID (Without Custom)
+	private function getShortenedURLFromIDnonCustom($integer){
+		$base = ALLOWED_CHARS;
 		$length = strlen($base);
-		$out = null;
-		while($integer > $length - 1)
-		{
+		$out = '';
+		while($integer > $length - 1){
 			$out = $base[fmod($integer, $length)] . $out;
 			$integer = floor( $integer / $length );
 		}
 		return $base[$integer] . $out;
 	}
 
+	// Calculates the SHORT url based on the ID (With Custom (meaning it forces numerical on first char!))
+	private function getShortenedURLFromIDCustom($integer){
+		$lastChar = substr($integer, strlen($integer)-1, strlen($integer));	// Last digit of the $integer is substracted of the number and forced to be the first char of the SHORT tag
+		$short = (substr($integer, 0, strlen($integer)-1) > 0) ? $this->getShortenedURLFromIDnonCustom(substr($integer, 0, strlen($integer)-1)) : '';
+		return $lastChar . $short;	// Call the getShortenedURLFromIDnonCustom using the numerical without the last digit
+	}
+
+	// Calulates the ID form the URL based on the SHORT url deciding if CUSTOM or not
+	private function getIDFromShortenedURL($string){
+		return (CUSTOMTAG) ? $this->getIDFromShortenedURLCustom($string) : $this->getIDFromShortenedURLnonCustom($string);
+	}
+
 	// Calculates the ID of the URL based on the SHORT url
-	private function getIDFromShortenedURL($string, $base = ALLOWED_CHARS){
+	private function getIDFromShortenedURLnonCustom($string){
+		$base = ALLOWED_CHARS;
 		$length = strlen($base);
 		$size = strlen($string) - 1;
 		$string = str_split($string);
@@ -85,9 +113,15 @@ class Shortener{
 		return $out;
 	}
 
+	// Calculates the ID of the URL based on the SHORT url
+	private function getIDFromShortenedURLCustom($string){
+		if(strlen($string) > 1) return $this->getIDFromShortenedURLnonCustom(substr($string, 1, strlen($string))) . substr($string, 0, 1);
+		else return $string;
+	}
+
 	// Check if the url is valid (excludes all 404 sites)
 	private function checkURL($url){
-		if(CHECK_VALID_URL){
+		if(CHECK_404_URL){
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch,  CURLOPT_RETURNTRANSFER, TRUE);

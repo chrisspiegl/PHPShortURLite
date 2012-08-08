@@ -1,11 +1,11 @@
 <?php
 $code = array();
 $code['prompt'] = <<<EOF
-var q=prompt('URL:', 'http://');if(q){document.location='http://TARGET/?o='+encodeURIComponent(q)+'&API_KEY=%API_KEY%&API_USER=%API_USER%';};
+var q=prompt('URL:', 'http://'); var t=prompt('Tag:', ''); if(q){document.location='http://TARGET/?o='+encodeURIComponent(q)+"&t="+t+'&API_KEY=%API_KEY%&API_USER=%API_USER%';};
 EOF;
 
 $code['this'] = <<<EOF
-window.location.href='http://TARGET/?o='+encodeURIComponent(location.href)+'&API_KEY=%API_KEY%&API_USER=%API_USER%';
+var t=prompt('Tag:', ''); document.location='http://TARGET/?o='+encodeURIComponent(location.href)+"&t="+t+'&API_KEY=%API_KEY%&API_USER=%API_USER%';
 EOF;
 
 foreach($code as $key=>$val){
