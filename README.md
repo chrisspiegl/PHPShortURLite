@@ -6,11 +6,12 @@ is a PHP based project to shorten urls without a MySql database. Instead we use 
 1. Move the files up to your FTP (desired directory)
 2. Set the folder */data* to CHMOD 777
 3. Make a copy of the *db.example.sqlite* file named *db.sqlite*
-4. Make a copy of the *config.example.php* file named *config.php*
-5. Edit your *config.php* file
-6. Go to: http://YOURDOMAIN.com/?bmk=USERNAME (input your data before heading there)
-7. Drag the bookmarkslets to your bookmark bar
-8. Start shortening
+4. Rename the file *example.htaccess* to *.htaccess*
+5. Make a copy of the *config.example.php* file named *config.php*
+6. Edit your *config.php* file
+7. Go to: http://YOURDOMAIN.com/?bmk=USERNAME (input your data before heading there)
+8. Drag the bookmarkslets to your bookmark bar
+9. Start shortening
 
 # Custom Tags or Not
 
