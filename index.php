@@ -23,11 +23,12 @@ if(isset($_GET['short']) || isset($_GET['s'])){
 
 }else if(isset($_GET['original']) || isset($_GET['o'])){
 	if(!AUTH || (isset($_GET['API_KEY']) && $_GET['API_KEY'] && isset($_GET['API_USER']) && $_GET['API_USER'] && $API_AUTH[$_GET['API_USER']] === $_GET['API_KEY'])){
+		$tag = (isset($_GET['t'])) ? $_GET['t'] : '';
 		$original = (isset($_GET['original'])) ? $_GET['original'] : $_GET['o'];
 		try{
-			m('ORIGINAL: ' . $original);
+			m('ORIGINAL: ' . $original . ' -> ' . $tag);
 			$s = new Shortener();
-			$short = $s->shorten($original);
+			$short = $s->shorten($original, $tag);
 			m('SHORT: ' . SHORT_URL . '/' . $short);
 			if( ! DEBUG){
 				header('Content-Type: text/plain;charset=UTF-8');
