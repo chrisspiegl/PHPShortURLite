@@ -12,6 +12,10 @@ is a PHP based project to shorten urls without a MySql database. Instead we use 
 7. Drag the bookmarkslets to your bookmark bar
 8. Start shortening
 
+# Custom Tags or Not
+
+Custom tags are usefull if you would like to set your own short link tags for some urls. Those are better to remember and to put on business cards or the like. But they come with a disadvantage: they need some letters to be taken from the overall pool. Thus you can activate them and deactivate them in the *config.php* file. **BUT**: do not change that setting **EVER**! In this implementation, the custom tags and the standard short links are differentiated by the fact that standard short links have always start with a number (0-9). This number is the last digit of the ID in the database.
+
 # API
 
 If you would like to shorten your URL in in another script:
@@ -34,3 +38,24 @@ I got some inspiring orientation form the following open source projects on GitH
 * [github.com - PHP-URL-Shortener](https://github.com/briancray/PHP-URL-Shortener)
 * [github.com - php-url-shortener](https://github.com/mathiasbynens/php-url-shortener)
 * [github.com - URL-Shortener](https://github.com/MaxKDevelopment/URL-Shortener)
+
+# Version / Changelog
+
+## Roadmap
+
+* Logfile to database automation script
+* Stats analysis
+* Admin interface
+* Shorten interface
+
+## 2012-08-08: v0.1.1
+
+* Added custom shortlink algorithm
+
+## 2012-08-07: v0.1
+
+* Started the project
+* Simple base implementation
+* Writing logs into monthly log files (serialized array of data)
+* Caching shortlink
+* No custom tags
