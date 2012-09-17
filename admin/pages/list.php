@@ -36,7 +36,7 @@
 			<td><?=date("Y-m-d \a\\t H:m", $short['savedate']);?></td>
 			<td><?=$short['clicks'];?></td>
 			<td><?=(!empty($short['last_visit'])) ? date("Y-m-d \a\\t H:m", $short['last_visit']) : 'n/a';?></td>
-			<td><a href="?page=listEdit&id=<?=$short['id'];?>">Edit</a> | <a href="?page=listDelete&id=<?=$short['id'];?>">Delete</a></td>
+			<td><a href="?page=listEdit&id=<?=$short['id'];?>">Edit</a><!-- | <a href="?page=listDelete&id=<?=$short['id'];?>">Delete</a--></td>
 		</tr>
 
 		<?php
