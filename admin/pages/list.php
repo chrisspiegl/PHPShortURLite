@@ -7,12 +7,10 @@
 
 <h1>Todo:</h1>
 <ul>
-	<li>In case of edit: show the edit screen to change the values, a button to save the changes and the logic to clear the cache (the one file) after that step!</li>
-	<li>In case of delete: ask again (JS?) and than mark the entry as deleted</li>
 	<li>New entry implementation!</li>
 </ul>
 
-<div id="addButton"><a href="">Add New</a></div>
+<div id="addButton"><a href="?page=listAdd">Add New</a></div>
 
 <table>
 	<tr>
