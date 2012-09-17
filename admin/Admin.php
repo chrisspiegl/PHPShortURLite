@@ -87,6 +87,13 @@ class Admin {
 		return $lines;
 	}
 
+	public function getStats($datefrom, $dateto){
+		$query = "SELECT * FROM $this->table_track_log WHERE time > $dateto AND time < $datefrom;";
+		foreach($this->db->query($query) as $row){
+			$ret[] = $row;
+		}
+		return $ret;
+	}
 	private function deleteFolderContent($path){
 		if(is_dir($path)){
 			$files = array_diff(scandir($path), array('.', '..'));
