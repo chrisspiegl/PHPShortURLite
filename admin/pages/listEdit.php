@@ -20,7 +20,7 @@ if(isset($_GET['edit']) && $_GET['edit'] == 'true'){
 
 $short = $admin->getOne($_GET['id']);
 
-if($short == -1){ ?>
+if(!is_object($short) && $short == -1){ ?>
 	<div class="error">There is no shortlink to edit with the ID: <?=$_GET['id'];?></div>
 <?php }else{ ?>
 

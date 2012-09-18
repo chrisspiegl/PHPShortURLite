@@ -16,7 +16,6 @@ $arr = array(
 	'ref'=>array()
 );
 foreach($data as $d){
-	//$d['short'] = '\'' . $d['short'] . '\'';
 	foreach($arr as $key=>&$val){
 		$val[$d[$key]] = (isset($val[$d[$key]])) ? $val[$d[$key]]+1 : 1;
 	}
@@ -40,7 +39,7 @@ foreach($arr as $key=>&$val){
 	</tr>
 	<tr>
 		<?php
-			foreach($arr as $key=>$val){
+		foreach($arr as $key=>&$val){
 		?>
 		<td style="vertical-align: top;">
 			<table>
