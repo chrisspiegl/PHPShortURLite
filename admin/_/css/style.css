@@ -1,0 +1,50 @@
+body {
+  font-size: 12px;
+  line-height: 1em;
+  width: 900px;
+  margin: 0 auto;
+}
+header {
+  border-bottom: 1px solid #eee;
+  margin: 2em 0 2em;
+  padding: 1em;
+}
+header h1 {
+  text-align: center;
+}
+header nav {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+header li {
+  list-style: none;
+  display: inline;
+  padding: 0 1em 0;
+}
+footer {
+  border-top: 1px solid #eee;
+  margin: 2em 0 0;
+  padding: 1em;
+  text-align: center;
+}
+.success {
+  text-align: center;
+  font-size: 4em;
+  line-height: 2em;
+  color: green;
+  background-color: #dfffdf;
+  border-color: green;
+  border-style: dashed;
+  border-width: 1px;
+}
+.error {
+  text-align: center;
+  font-size: 4em;
+  line-height: 2em;
+  color: red;
+  background-color: #FFDFDF;
+  border-color: red;
+  border-style: dashed;
+  border-width: 1px;
+}
