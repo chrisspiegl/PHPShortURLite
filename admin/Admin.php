@@ -19,7 +19,7 @@ class Admin {
 		foreach($this->db->query($query) as $row){
 			$ret[] = $row;
 		}
-		return $ret;	
+		return $ret;
 	}
 
 	public function getOne($id){
@@ -92,7 +92,7 @@ class Admin {
 		foreach($this->db->query($query) as $row){
 			$ret[] = $row;
 		}
-		return $ret;
+		return (isset($ret)) ? $ret : array();
 	}
 	private function deleteFolderContent($path){
 		if(is_dir($path)){
