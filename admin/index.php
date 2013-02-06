@@ -40,9 +40,6 @@ $admin = new Admin();
     <script type="text/javascript" src="_/js/plugins/jqplot.dateAxisRenderer.min.js"></script>
     <script type="text/javascript" src="_/js/plugins/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="../plugins/jqplot.ohlcRenderer.min.js"></script>
-    <?php if ($_GET['page'] == 'stats'): ?>
-    <script type="text/javascript" src="_/js/stats_graph.js"></script>
-    <?php endif; ?>
 </html>
 <body>
 	<header>

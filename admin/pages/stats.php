@@ -61,7 +61,7 @@ if($clicks > 0){
         $daily_log_js .= ",'";
         $j = 0;
         foreach($val['shorts'] as $key1=>$val1){
-            if($j > 5) { $daily_log_js .= '<br />'; $j = 0; }
+            if($j >= 4) { $daily_log_js .= '<br />'; $j = 0; }
             $daily_log_js .= "$key1: $val1, ";
             $j++;
         }
