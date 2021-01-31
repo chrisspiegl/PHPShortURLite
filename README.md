@@ -1,5 +1,14 @@
 # PHPShortURLite
-is a PHP based project to shorten urls without a MySql database. Instead we use a SQLite database to store the shortlink and original link. Additionally there is the availibility to cache the links. The log is done in a monthly file and implementation of the log-file to database connection is not yet implemented (That means: data is collected but not used yet).
+
+![current status](https://img.shields.io/badge/current%20status-halted-red?style=flat-square)
+
+## Halted Project
+
+I lost motivation to work on this for now. The code is here if you want to take a look.
+
+## About
+
+This is a PHP based project to shorten urls without a MySql database. Instead we use a SQLite database to store the shortlink and original link. Additionally there is the availibility to cache the links. The log is done in a monthly file and implementation of the log-file to database connection is not yet implemented (That means: data is collected but not used yet).
 
 # Installation
 
